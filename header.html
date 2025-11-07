@@ -46,6 +46,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
+            position: relative;
         }
 
         .brand {
@@ -75,6 +76,7 @@
             display: flex;
             align-items: center;
             gap: 2rem;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         nav a {
@@ -134,13 +136,79 @@
         }
 
         @media (max-width: 720px) {
-            nav,
-            .cta-button {
+            .nav {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                align-items: center;
+            }
+
+            nav {
+                position: absolute;
+                top: calc(100% + 0.75rem);
+                left: 0;
+                right: 0;
+                padding: 1rem;
+                border-radius: 18px;
+                background: var(--bg);
+                box-shadow: var(--shadow);
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+                opacity: 0;
+                transform: translateY(-10px);
+                pointer-events: none;
+                visibility: hidden;
+            }
+
+            body:not(.js-enabled) nav {
+                position: static;
+                padding: 0;
+                background: none;
+                box-shadow: none;
+                flex-direction: row;
+                gap: 1.5rem;
+                opacity: 1;
+                transform: none;
+                pointer-events: auto;
+                visibility: visible;
+            }
+
+            nav.open {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+                visibility: visible;
+            }
+
+            nav a {
+                font-size: 1rem;
+                width: 100%;
+                padding: 0.65rem 0.75rem;
+                border-radius: 12px;
+                background: rgba(148, 163, 184, 0.08);
+                backdrop-filter: blur(6px);
+            }
+
+            body:not(.js-enabled) nav a {
+                width: auto;
+                padding: 0.25rem 0;
+                background: none;
+            }
+
+            nav a::after {
                 display: none;
+            }
+
+            .cta-button {
+                grid-column: 2;
+                justify-self: center;
+                display: inline-flex;
+                min-width: max-content;
             }
 
             .menu-toggle {
                 display: inline-flex;
+                justify-self: end;
             }
         }
 
@@ -164,13 +232,68 @@
                 <span class="brand-logo">A</span>
                 <span>Aurora UI</span>
             </a>
-            <nav aria-label="Primary navigation">
+            <nav id="primary-navigation" data-nav aria-label="Primary navigation">
                 <a href="#features">Features</a>
                 <a href="#pricing">Pricing</a>
             </nav>
             <button class="cta-button" type="button">Get Started</button>
-            <button class="menu-toggle" type="button" aria-label="Open menu">☰</button>
+            <button class="menu-toggle" type="button" data-menu-toggle aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">☰</button>
         </div>
     </header>
+    <script>
+        document.body.classList.add('js-enabled');
+        const nav = document.querySelector('[data-nav]');
+        const menuToggle = document.querySelector('[data-menu-toggle]');
+        const mobileQuery = window.matchMedia('(max-width: 720px)');
+
+        const closeMenu = () => {
+            nav.classList.remove('open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            nav.setAttribute('aria-hidden', 'true');
+        };
+
+        const openMenu = () => {
+            nav.classList.add('open');
+            menuToggle.setAttribute('aria-expanded', 'true');
+            nav.setAttribute('aria-hidden', 'false');
+        };
+
+        const syncNavState = () => {
+            if (mobileQuery.matches) {
+                if (!nav.classList.contains('open')) {
+                    nav.setAttribute('aria-hidden', 'true');
+                }
+            } else {
+                nav.classList.remove('open');
+                nav.removeAttribute('aria-hidden');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            }
+        };
+
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            if (isExpanded) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+
+        nav.addEventListener('click', (event) => {
+            if (mobileQuery.matches && event.target.closest('a')) {
+                closeMenu();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (mobileQuery.matches && event.key === 'Escape') {
+                closeMenu();
+                menuToggle.focus();
+            }
+        });
+
+        mobileQuery.addEventListener('change', syncNavState);
+        syncNavState();
+    </script>
 </body>
 </html>
