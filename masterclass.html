@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPGA Masterclass Hero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d1a16;
+      --surface: rgba(23, 36, 31, 0.9);
+      --surface-muted: rgba(36, 52, 45, 0.65);
+      --text: #f5fbe6;
+      --text-subtle: rgba(245, 251, 230, 0.72);
+      --accent: #39ff8e;
+      --accent-muted: rgba(57, 255, 142, 0.15);
+      --warning: #f1c232;
+      --warning-dark: #b58d1f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, rgba(61, 230, 164, 0.18), transparent 55%),
+        radial-gradient(circle at top right, rgba(150, 255, 200, 0.1), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(2rem, 3vw, 4rem);
+    }
+
+    main {
+      width: min(960px, 100%);
+      background: linear-gradient(165deg, rgba(18, 28, 24, 0.92), rgba(15, 22, 19, 0.88));
+      border-radius: 28px;
+      padding: clamp(2.5rem, 4vw, 4rem);
+      box-shadow: 0 30px 80px rgba(5, 10, 8, 0.6);
+      border: 1px solid rgba(118, 209, 146, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    main::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(57, 255, 142, 0.12), transparent 55%);
+      pointer-events: none;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: clamp(2rem, 3vw, 3.5rem);
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      display: inline-flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .brand::before {
+      content: "";
+      display: inline-block;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(57, 255, 142, 0.95), rgba(103, 255, 199, 0.6));
+      box-shadow: 0 15px 25px rgba(57, 255, 142, 0.45);
+    }
+
+    .offer-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--surface);
+      border-radius: 999px;
+      padding: 0.55rem 0.8rem 0.55rem 0.65rem;
+      border: 1px solid rgba(57, 255, 142, 0.18);
+      position: relative;
+      overflow: hidden;
+      min-width: 280px;
+    }
+
+    .offer-chip::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(57, 255, 142, 0.16), transparent 65%);
+      pointer-events: none;
+    }
+
+    .offer-chip strong {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--warning);
+      background: rgba(241, 194, 50, 0.15);
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    .offer-chip span {
+      font-size: 0.95rem;
+      color: var(--text-subtle);
+    }
+
+    .timer {
+      margin-left: auto;
+      font-weight: 600;
+      color: var(--warning);
+      font-size: 0.95rem;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      font-weight: 700;
+      margin: 0 0 1.5rem;
+      max-width: 760px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .highlight {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(57, 255, 142, 0.22), rgba(57, 255, 142, 0.08));
+      color: var(--text);
+      border-radius: 12px;
+      padding: 0.1rem 0.4rem;
+      box-shadow: inset 0 0 0 1px rgba(57, 255, 142, 0.32);
+    }
+
+    .stats {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-weight: 500;
+      color: var(--text-subtle);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stats span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      border: 1px solid rgba(57, 255, 142, 0.12);
+    }
+
+    p {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text-subtle);
+      max-width: 620px;
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: clamp(1.75rem, 5vw, 2.3rem);
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .offer-chip {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: clamp(2.3rem, 8vw, 3rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="brand">IPGA Masterclass</div>
+      <div class="offer-chip">
+        <strong>50 spots at $2400 off</strong>
+        <span>46 claimed · 4 left</span>
+        <span class="timer">Ends in 00:21:12</span>
+      </div>
+    </header>
+
+    <h1>Here's the best business model for making <span class="highlight">$10k-$30k+/month</span> in 2026.</h1>
+
+    <div class="stats">
+      <span>2200+ members</span>
+      <span>1400+ wins</span>
+      <span>$20k/m avg.</span>
+    </div>
+
+    <p>I give you all the knowledge &amp; systems you need to put in the work and make big money. This is business, not rocket-science.</p>
+  </main>
+</body>
+</html>
